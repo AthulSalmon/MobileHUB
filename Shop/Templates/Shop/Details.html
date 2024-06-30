@@ -1,0 +1,83 @@
+{% extends 'Shop/Header.html' %}
+{% load static %}
+{% block content %}
+{% load mathfilters %}
+<style>
+    /* Define styles for the table */
+    table {
+        width: 80%; /* Adjust the width of the table */
+        border-collapse: collapse; /* Collapse table borders */
+        margin: 20px auto; /* Center the table horizontally */
+    }
+    
+    th, td {
+        padding: 8px; /* Add padding to table cells */
+        text-align: left; /* Align text to the left */
+    }
+    
+    th {
+        background-color: #f2f2f2; /* Set background color for table header */
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* Alternate row background color */
+    }
+
+    tr:hover {
+        background-color: #ddd; /* Highlight row on hover */
+    }
+
+    img {
+        max-width: 50px; /* Set max width for images */
+        max-height: 50px; /* Set max height for images */
+    }
+
+    a {
+        text-decoration: none; /* Remove underline from links */
+        color: blue; /* Set link color */
+    }
+
+    a:hover {
+        color: red; /* Change link color on hover */
+    }
+</style>
+
+<table border="1" align="center">
+    <tr>
+        <th>Slno</th>
+        <th>Product Name</th>
+        <th>Image</th>
+        <th>Quantity</th>   
+        <th>Total amount</th>
+        <th>Action</th>
+    </tr>
+    {% for i in Data %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ i.product.product_name }}</td>
+        <td><img src="{{ i.product.product_photo.url }}"></td>
+        <td>{{ i.cart_qty }}</td>
+        <td>{{ i.product.product_rate|mul:i.cart_qty }}</td>
+        <td>
+            {% if i.cart_status == 2 %}
+                Canceled
+            {% else %}
+                {% if i.ship_status == 0 %}
+                    <a href="{% url 'Shop:updateproductbooking' i.id  %}">Not Packed</a>
+                {% elif i.ship_status == 1 %}
+                    <a href="{% url 'Shop:updateproductbooking' i.id  %}"> Product Packed</a>
+                {% elif i.ship_status == 2 %}
+                    <a href="{% url 'Shop:updateproductbooking' i.id  %}">Shipped</a>
+                {% elif i.ship_status == 3 %}
+                    <a href="{% url 'Shop:updateproductbooking' i.id  %}">Out for Delivery</a>
+                {% elif i.ship_status == 4 %}
+                    <a href="{% url 'Shop:updateproductbooking' i.id  %}">Delivered</a>
+                {% elif i.ship_status == 5 %}
+                    Order Completed
+                {% endif %}
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}

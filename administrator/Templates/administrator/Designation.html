@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Designation</title>
+    
+</head>
+<body><center><h2>Designation</h2></center>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table border="3" align="center">
+            <tr>
+                <th><label for="Designation">Designation</label><br></th>
+                <th><input type="text" id="Designation" name="txtdesignation" placeholder="Enter the Designation" value="{{editdata.designation_name}}" required><br><br></th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <center><input type="submit" value="Save">
+                    <input type="reset" value="Cancel"></center>
+                </td>
+            </tr>
+        </table>
+    </form>
+<table border="1"  align="center">
+    <tr>
+        <td>Slno</td>
+        <td> Designation</td>
+        <td> Action</td>
+    </tr>
+    {% for i in Data  %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.designation_name}}</td>
+        <td><a href="{% url 'administrator:delDesignation' i.id %}">Delete</a>/<a href="{% url 'administrator:designationupdate' i.id %}">Edit</a> </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

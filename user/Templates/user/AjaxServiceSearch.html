@@ -1,0 +1,10 @@
+{% for service in data %}
+        <div class="service-card">
+            <img src="{{ service.service_photo.url }}" alt="{{ service.service_name }}">
+            <div class="service-details">
+                <div class="service-name">{{ service.service_name }}</div>
+                <div class="service-rate">{{ service.service_rate }}</div>
+                <a href="{% url 'user:appointment' service.id %}" class="book-btn">Book</a>
+            </div>
+        </div>
+        {% endfor %}

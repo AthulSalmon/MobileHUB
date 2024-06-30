@@ -1,0 +1,115 @@
+<style>
+    body {
+       font-family: 'Times New Roman', Times, serif;
+       background-color: #f8f8f8;
+   }
+
+   /* Container for search and product results */
+   .container {
+       max-width: 1200px;
+       margin: 20px auto;
+   }
+
+   /* Search bar */
+   .search-bar {
+       margin-bottom: 20px;
+   }
+   .product-item {
+       width: calc(25% - 20px); /* 25% width with margin */
+       background-color: #fff;
+       border: 1px solid #ddd;
+       border-radius: 8px;
+       padding: 20px;
+       margin-bottom: 20px;
+       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   }
+
+   /* Product image */
+   .product-image {
+       width: 100%;
+       height: auto;
+       border-radius: 5px;
+       align-items: center;
+       max-width: 400px; /* Limiting maximum width */
+       max-height: 400px; /* Limiting maximum height */
+   }
+
+   /* Product details */
+   .product-details {
+   text-align: center;
+   padding: 20px;
+}
+
+   /* Product name */
+   .product-details h3 {
+   margin-top: 10px;
+   font-size: 22px;
+   color: #333;
+   text-transform: uppercase;
+}
+
+   /* Product rate */
+   .product-details .rate {
+   font-size: 18px;
+   color: #4CAF50;
+}
+
+/* Product details text */
+.product-details p {
+   margin: 10px 0;
+   font-size: 16px;
+   color: #666;
+}
+
+
+   /* Out of stock message */
+   .out-of-stock {
+       color: red;
+       font-weight: bold;
+   }
+
+   /* Add to cart button */
+   .place-order-btn {
+   background-color: #4CAF50;
+   color: white;
+   padding: 10px 20px;
+   text-align: center;
+   text-decoration: none;
+   border-radius: 4px;
+   transition: background-color 0.3s;
+   display: inline-block;
+   margin-top: 20px;
+}
+
+.place-order-btn:hover {
+   background-color: #45a049;
+}
+   .product-container {
+       display: flex;
+       flex-wrap: wrap;
+       justify-content: center; /* Center horizontally */
+       align-items: center; /* Center vertically */
+   }
+</style>
+
+<div class="product-container" id="result">
+   {% for product in data %}
+   <div class="product-item">
+       <img src="{{ product.product_photo.url }}" alt="Product Image" class="product-image">
+       <div class="product-details">
+           <h3>{{ product.product_name }}</h3>
+           <h3>Rate: {{ product.product_rate }}</h3>
+           <h3>Details: {{ product.product_details }}</h3>
+           <h3>Brand: {{ product.brand.brand_name }}</h3>
+           <h3>Color: {{ product.color.color_name }}</h3>
+           <h3>Category: {{ product.subcategory.category.category_name }}</h3>
+           <h3>Sub Category: {{ product.subcategory.subcat_name }}</h3>
+           {% if product.total <= 0 %}
+           <p class="out-of-stock">Out of Stock</p>
+           {% else %}
+           <a href="{% url 'user:productbook' product.id %}" class="place-order-btn">Add to cart</a>
+           {% endif %}
+       </div>
+   </div>
+   {% endfor %}
+</div>

@@ -1,0 +1,10 @@
+<select name="" id="">
+    <option 
+    {% if i.id == editdata.subcategory_id %}
+    selected
+    {% endif %}
+    value="">...Select...</option>
+    {% for i in subcategorydata %}
+    <option value="{{i.id}}">{{i.subcat_name}}</option>
+    {% endfor %}
+</select>

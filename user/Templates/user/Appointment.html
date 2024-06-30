@@ -1,0 +1,94 @@
+
+{% extends 'user/head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Book Your Service</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+       
+
+        <label for="date">Preferred Date</label>
+        <input type="date" id="date" name="txtdate" required>
+
+        <label for="time">Preferred Time</label>
+        <input type="time" id="time" name="txttime" required>
+
+        <label for ="Detail">Phone Details</label>
+        <td><input type="text" name="txtdetail" placeholder="Enter the Detail" required ></td>
+
+        <label for ="Detail">Complaint</label>
+        <td><input type="text" name="txtcom" placeholder="Enter the Detail" required ></td>
+
+        <label for ="Detail">Phone Number</label>
+        <td><input type="text" name="txtnum" placeholder="Enter the Detail" required ></td>
+
+        <label for ="Detail"></label>
+        <td><input type="radio" name="pickup" value="Yes" >Pick up
+        <input type="radio" name="pickup" value="No" required/>No pick Up</td><br>
+
+
+        <input type="submit" value="Book Now">
+    </form>
+</div>
+
+</body>
+</html>
+{% endblock content %}

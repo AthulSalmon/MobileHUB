@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Service Type</title>
+    
+</head>
+<a href="{% url 'administrator:loadinghomepage' %}">Home</a>
+<body><center><h2>RAM</h2></center>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table border="3" align="center">
+            <tr>
+                <th><label for="district">RAM</label><br></th>
+                <th><input type="text" id="ram" name="txtram" placeholder="Enter the Value" value="{{editdata.ram_name}}" required><br><br></th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <center><input type="submit" value="Save">
+                    <input type="reset" value="Cancel"></center>
+                </td>
+            </tr>
+        </table>
+    </form>
+<table border="1"  align="center">
+    <tr>
+        <td>Slno</td>
+        <td> RAM</td>
+        <td> Action</td>
+    </tr>
+    {% for i in Data  %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.ram_name}}</td>
+        <td><a href="{% url 'administrator:delram' i.id %}">Delete</a>/<a href="{% url 'administrator:ramupdate' i.id %}">Edit</a> </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

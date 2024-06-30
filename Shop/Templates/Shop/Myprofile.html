@@ -1,0 +1,103 @@
+{% extends 'Shop/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        /* CSS for the profile page */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+        }
+
+        .profile-image {
+            text-align: center;
+        }
+
+        .profile-image img {
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+        }
+
+        .profile-details {
+            margin-top: 20px;
+        }
+
+        .profile-details table {
+            width: 100%;
+        }
+
+        .profile-details td {
+            padding: 5px;
+        }
+
+        .profile-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .profile-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #af744c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .profile-link:hover {
+            background-color: #a05745;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="profile-card">
+            <div class="profile-image">
+                <img src="{{ data.shop_logo.url }}" alt="Profile Image">
+            </div>
+            <div class="profile-details">
+                <table>
+                    <tr>
+                        <td>Name:</td>
+                        <td>{{ data.shop_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Contact:</td>
+                        <td>{{ data.shop_contact }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>{{ data.shop_email }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="profile-links">
+                <a href="{% url 'Shop:editprofile' %}" class="profile-link">Edit Profile</a>
+                <a href="{% url 'Shop:changepassword' %}" class="profile-link">Change Password</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock content %}

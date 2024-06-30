@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+</head>
+<body>
+    <a href="{% url 'administrator:admininsertselect' %}">Add admin</a><br>
+   
+    
+    <a href="{% url 'administrator:Districtinsertselect' %}">District</a><br>
+    <a href="{% url 'administrator:Placeinsertselect' %}">Place</a><br>
+    <a href="{% url 'administrator:admininsertselect' %}"> New Employee</a><br><br>
+   
+    <a href="{% url 'administrator:User' %}">View User</a><br>
+    <a href="{% url 'administrator:acceptuserlist' %}">Accepted User</a><br>
+    <a href="{% url 'administrator:rejecteduserlist' %}">Rejected User</a><br><br>
+
+    <a href="{% url 'administrator:admininsertselect' %}">Course</a><br><br>
+    <a href="{% url 'administrator:admininsertselect' %}">Department</a><br>
+    <a href="{% url 'administrator:admininsertselect' %}">Semester</a><br>
+    <a href="{% url 'administrator:admininsertselect' %}">Subject</a><br>
+    <a href="{% url 'administrator:admininsertselect' %}">Syllabus</a><br><br>
+
+
+    <a href="{% url 'administrator:Categoryinsertselect' %}">Category</a><br>
+    <a href="{% url 'administrator:Subcategoryinsertselect' %}">Sub Category</a><br>
+
+
+
+    <a href="{% url 'administrator:complaintSelect' %}"> New Complaint</a><br><br>
+    <a href="{% url 'administrator:complaintsolvedSelect' %}"> Sloved complaint</a><br><br>
+
+
+    <a href="{% url 'administrator:servicetypeinsertselect' %}"> Service Type</a><br>
+    
+
+
+
+
+</body>
+</html>

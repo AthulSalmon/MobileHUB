@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Registration</title>
+</head>
+<body>
+    <a href="{% url 'Test:loadinghomepage' %}">Home</a>
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table border="2" align="center">
+            <tr>
+                <th colspan="4"> Match Shedule    </th>
+            </tr>
+            <tr>
+                <td>Match Name:</td>
+                <td><input type="text" name="txt_tname" placeholder="Enter Match Name"  required></td><br>
+            </tr>
+            <tr>
+                <td>Team 1</td>
+                <td>
+                    <select name="sel_team1" id="sel_team1">
+                        <option value="">...Select...</option>
+                        {% for i in teamdata %}
+                        <option 
+                        {% if i.id == editdata.team_id %}
+                        selected
+                        {% endif %}
+                        value="{{i.id}}">{{i.team_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Team 2</td>
+                <td>
+                    <select name="sel_team2" id="sel_team2">
+                        <option value="">...Select...</option>
+                        {% for i in teamdata %}
+                        <option 
+                        {% if i.id == editdata.team_id %}
+                        selected
+                        {% endif %}
+                        value="{{i.id}}">{{i.team_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+                <td>From date:</td>
+                <td><input type="date" name="txt_fdate"  required></td><br>
+            </tr>
+            <tr>
+                <td>To date:</td>
+                <td><input type="date" name="txt_tdate"  required></td><br>
+            </tr>
+            <tr>
+                <td>Venue:</td>
+                <td><input type="text" name="txt_venue" placeholder="Enter Match Place"  required></td><br>
+            </tr>
+            
+            <tr>
+                <th colspan="4">
+                    <input type="submit" value="Submit">
+                    <input type="reset" value="Cancel">
+                </th>
+            </tr>
+        </table>
+</body>
+</html>
+
+<table border="1" align="center" cellpadding="10">
+    <tr>
+        <th>Sl.No</th>
+        <th>Match Name</th>
+        <th>Team One Name</th>
+        <th>Team Two Name</th>
+        <th>From date</th>
+        <th>To date</th>
+        <th>Venue</th> 
+    </tr>
+    {% for i in data %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.match_name}}</td>
+        <td>{{i.team.team_name}}</td>
+        <td>{{i.team2.team_name}}</td>
+        <td>{{i.from_Date}}</td>
+        <td>{{i.to_Date}}</td>
+        <td>{{i.venue}}</td>   
+    </tr>
+    {% endfor %}
+
+</table>

@@ -1,0 +1,27 @@
+{% load mathfilters %}
+</table>
+<table border="1" align="center">
+    <tr>
+        <td>Slno</td>
+        <td>Product Name</td>
+        <td>Date of order</td>
+        <td>Quatity</td>   
+        <td>Total amount</td>
+        <td>Action</td>
+    </tr>
+    {%  for i in Data %}
+    <tr>
+      <td>{{forloop.counter}}</td>
+      <td>{{i.product.product_name}}</td>
+      <td>{{i.booking.booking_date}}</td>
+      
+      <td>{{i.cart_qty}}</td>
+      <td>{{i.product.product_rate|mul:i.cart_qty}}</td>
+      <td><a href="{% url 'user:cancel' i.id %}">Cancel order</a></td>
+     
+      
+    </tr>
+   
+    {% endfor %}
+</table>
+</form>

@@ -1,0 +1,73 @@
+{% extends 'user/head.html' %}
+{% load static %}
+{% block content %}
+{% load mathfilters %}
+
+<a href="{% url 'user:homepage' %}">Home</a>
+
+<table class="order-table" border="1" align="center">
+    <tr class="header-row">
+        <th>Slno</th>
+        <th>Product Name</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th>Quantity</th> 
+        <th>Date</th>     
+        <th>Total Amount</th>
+        <th>Shop</th>
+        <th>Action</th>
+        <th>Status</th>
+        <th>Invoice</th>
+    </tr>
+    {% for i in Data %}
+    <tr class="{% cycle 'even' 'odd' %}">
+        <td>{{ forloop.counter }}</td>
+        <td>{{ i.product.product_name }}</td>
+        <td><img src="{{ i.product.product_photo.url }}" class="product-image"></td>
+        <td>{{ i.product.product_rate }}</td>
+        <td>{{ i.cart_qty }}</td>
+        <td>{{ i.booking.booking_date|date:"F d, Y" }}</td>
+        <td>{{ i.product.product_rate|mul:i.cart_qty }}</td>
+        <td>{{ i.product.shop.shop_name }}</td>
+        <td>
+            {% if i.cart_status == 2 %}
+                Canceled
+            {% else %}
+                <a href="#" onclick="confirmCancel('{{ i.id }}')" class="cancel-link">Cancel order</a> /
+                <a href="{% url 'user:rating' i.product.id %}" class="feedback-link">Feedback</a>
+            {% endif %}
+        </td>
+        <td>
+            {% if i.cart_status == 2 %}
+                <span class="status-canceled">Canceled</span>
+            {% else %}
+                {% if i.ship_status == 0 %}
+                    Not Packed
+                {% elif i.ship_status == 1 %}
+                    Packed
+                {% elif i.ship_status == 2 %}
+                    Shipped
+                {% elif i.ship_status == 3 %}
+                    Out for Delivery
+                {% elif i.ship_status == 4 %}
+                    Delivered
+                {% elif i.ship_status == 5 %}
+                    Order Complete
+                {% endif %}
+            {% endif %}
+        </td>
+        <td><a href="{% url 'user:Billing' i.booking.id %}" class="invoice-link">Invoice</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script>
+function confirmCancel(cid) {
+    var confirmation = confirm("Are you sure you want to cancel this order?");
+    if (confirmation) {
+        window.location.href = "{% url 'user:cancel' 0 %}".replace('0', cid);
+    }
+}
+</script>
+
+{% endblock content %}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Employee</title>
+    
+</head>
+<body><center><h2>Employee</h2></center>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table border="3" align="center">
+            <tr>
+                <td><label for="name">Name</label></td>
+                <th><input type="text" id="name" name="txtname" placeholder="Enter the Name" value="{{editdata.emp_name}}" required></th>
+
+                
+            </tr>
+
+            <tr>
+                <td><label for="email">Email</label></td>
+                <th><input type="text" id="Email" name="txtemail" placeholder="Enter the Email"value="{{editdata.emp_contact}}"required></th>
+            </tr>
+            
+            <tr>
+                <td><label for="phoneno">Phone Number</label></td>
+                <th><input type="text" id="phoneno" name="txtphn"placeholder="Enter the Phone Number"value="{{editdata.emp_contact}}"required></th>
+            </tr>
+
+
+            <tr>
+                <td>Designation</td>
+                <td>
+                    <select name="sel_designation" id="sel_designation">
+                        <option value="">...Select...</option>
+                        {% for i in designationdata %}
+                        <option 
+                        {% if i.id == editdata.designation_id %}
+                        selected
+                        {% endif %}
+                        value="{{i.id}}">{{i.designation_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+
+            
+
+
+
+
+
+            <tr>
+                <td>Department</td>
+                <td>
+                    <select name="sel_dept" id="sel_dept">
+                        <option value="">...Select...</option>
+                        {% for i in deptdata %}
+                        <option 
+                        {% if i.id == editdata.department_id %}
+                        selected
+                        {% endif %}
+                        value="{{i.id}}">{{i.dept_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td><label for="salary">Basic Salary</label></td>
+                <th><input type="text" id="salary" name="txtsalary"placeholder="Enter the salary"value="{{editdata.emp_salary}}"required></th>
+            </tr>
+
+
+                <td colspan="2">
+                    <center><input type="submit" value="Save">
+                    <input type="reset" value="Cancel"></center>
+                </td>
+            </tr>
+        </table>
+    </form>
+<table border="1"  align="center">
+    <tr>
+        <td>Slno</td>
+        <td> Name</td>
+        <td> Phone</td>
+        <td> Email</td>
+        <td> Designation</td>
+        <td> Department</td>
+        <td> salary</td>
+        
+        <td> Action</td>
+    </tr>
+    {% for i in data  %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.emp_name}}</td>
+        <td>{{i.emp_contact}}</td>
+        <td>{{i.emp_email}}</td>
+        <td>{{i.designation.designation_name}}</td>
+        <td>{{i.department.dept_name}}</td>
+        <td>{{i.emp_salary}}</td>
+
+        <td><a href="{% url 'administrator:delemployee' i.id %}">Delete</a>/<a href="{% url 'administrator:employeeupdate' i.id %}">Edit</a> </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends 'Shop/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+</head>
+<body>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table align="center">
+        
+           
+            <tr>
+                <td>FromDate</td>
+                <td><input type="date" name="txtfromdate" placeholder="Enter Date" required ></td>
+            </tr>
+            <tr>
+                <td>ToDate</td>
+                <td><input type="date" name="txttodate" placeholder="Enter Date" required ></td>
+            </tr>
+            
+           
+            <tr>
+                
+                <td colspan="2" align="center">
+                    <input type="submit" name="btnsubmit" value="Report">
+                    <input type="reset" name="btncancel" value="Cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html>
+
+
+<table border="1" align="center" cellpadding="10">
+    <tr>
+        <th>Sl.No</th>
+        <th>UserName</th>
+        <th>Booking Date</th>
+        <th>Price</th>
+        <th>Action</th>
+       
+        
+    </tr>
+    {% for i in data %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.user.user_name}}</td>
+        <td>{{i.booking_date}}</td>
+        <td>{{i.price}}</td>
+        <td><a href="{% url 'Shop:viewmore' i.id %}">View More</a></td>
+
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock content %}

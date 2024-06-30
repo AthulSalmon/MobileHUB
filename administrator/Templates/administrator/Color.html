@@ -1,0 +1,45 @@
+{% extends 'administrator/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Color</title>
+    
+</head>
+<a href="{% url 'administrator:loadinghomepage' %}">Home</a>
+<body><center><h2>Color</h2></center>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table border="3" align="center">
+            <tr>
+                <th><label for="district">Color</label><br></th>
+                <th><input type="text" id="ROM" name="txtcolor" placeholder="Enter the color" value="{{editdata.color_name}}" required><br><br></th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <center><input type="submit" value="Save">
+                    <input type="reset" value="Cancel"></center>
+                </td>
+            </tr>
+        </table>
+    </form>
+<table border="1"  align="center">
+    <tr>
+        <td>Slno</td>
+        <td> Color</td>
+        <td> Action</td>
+    </tr>
+    {% for i in Data  %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.color_name}}</td>
+        <td><a href="{% url 'administrator:delcolor' i.id %}">Delete</a>/<a href="{% url 'administrator:colorupdate' i.id %}">Edit</a> </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
+{% endblock content %}

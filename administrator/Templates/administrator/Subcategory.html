@@ -1,0 +1,64 @@
+{% extends 'administrator/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Sub Category</title>
+<center><h1>Sub Category Name</h1></center>
+</head>
+<body>
+    <a href="{% url 'administrator:loadinghomepage' %}"> Home</a>
+    <form method="POST">
+       
+        {% csrf_token %}
+        <table border="1"  align="center">
+            <tr>
+                <td>Category</td>
+                <td>
+                    <select name="sel_cat" id="sel_cat">
+                        <option value="">...Select...</option>
+                        {% for i in catdata %}
+                        <option 
+                        {% if i.id == editdata.category_id %}
+                        selected
+                        {% endif %}
+                        value="{{i.id}}">{{i.category_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Sub Category</td>
+                <td><input type="text" name="txtsub" placeholder="Enter Subcategory" required value="{{editdata.subcat_name}}"></td>
+            </tr>
+            <tr>
+                
+                <td colspan="2" align="center">
+                    <input type="submit" name="btnsubmit" value="Save">
+                    <input type="reset" name="btncancel" value="Cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table border="1" align="center" cellpadding="10">
+        <tr>
+            <th>Sl.No</th>
+            <th>Category</th>
+            <th>Sub Category</th>
+            <th>Action</th>
+        </tr>
+        {% for i in data %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.category.category_name}}</td>
+            <td>{{i.subcat_name}}</td>
+            <td><a href="{% url 'administrator:delsubcategory' i.id %}">Delete</a> | <a href="{% url 'administrator:subcategoryupdate' i.id %}">Edit</a></td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</body>
+</html>
+{% endblock content %}

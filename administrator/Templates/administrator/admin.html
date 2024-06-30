@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Registration</title>
+    
+</head>
+<body>
+    <br><br>
+    <center><h2>Admin Registration</h2></center>
+    <form action="" method="post">
+        {% csrf_token %}
+    
+        <table border="3" align="center">
+            <tr>
+                <th><label for="district">Name</label><br></th>
+                <th><input type="text" id="name" name="txtname" placeholder="Enter the Name"required><br><br></th>
+            </tr>
+            <tr>
+                <th><label for="district">Email</label><br></th>
+                <th><input type="text" id="Email" name="txtemail" placeholder="Enter the Email"required><br><br></th>
+            </tr>
+            
+            <tr>
+                <th><label for="phoneno">Phone Number</label><br></th>
+                <th><input type="text" id="phoneno" name="txtphn"placeholder="Enter the Phone Number"required><br><br></th>
+            </tr>
+            <tr>
+                <th><label for="Password">Password</label><br></th>
+                <th><input type="Password" id="Password" name="txtpass"placeholder="Enter the Password"required><br><br></th>
+            </tr>
+            <tr>
+                <th><label for="Password"> Confirm Password</label><br></th>
+                <th><input type="Password" id="Password" name="txtcpass"placeholder="Reenter the Password"required><br><br></th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                   <center> <input type="submit" value="Save">
+                    <input type="submit" value="Cancel"></center>
+                </td>
+            </tr>
+        </table>
+        <table border="1" align="center">
+            <tr>
+                <td>Slno</td>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Phone Number</td>
+                <td>Password</td>
+            </tr>
+            {%  for i in Data %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{i.admin_name}}</td>
+              <td>{{i.admin_email}}</td>
+              <td>{{i.admin_phoneno}}</td>
+              <td>{{i.admin_password}}</td>
+
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>

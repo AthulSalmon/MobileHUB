@@ -1,0 +1,182 @@
+{% extends 'ServiceCenter/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Service Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        form {
+            width: 80%;
+            margin: 0 auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+        
+        input[type="text"], select, input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+        input[type="reset"] {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: left;
+        }
+        
+        input[type="reset"]:hover {
+            background-color: #da190b;
+        }
+        
+        .action-links a {
+            color: #4CAF50;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        
+        .action-links a:hover {
+            text-decoration: underline;
+        }
+        
+        img {
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <table border="3" align="center">
+            <tr>
+                <td>Name</td>
+                <td><input type="text" id="name" name="txtname" placeholder="Enter the service"required value="{{editdata.service_name}}"></td>
+            </tr>
+            <tr>
+                <td>Details</td>
+                <td><input type="text" id="details" name="txtdetails" placeholder="Enter the details"required value="{{editdata.service_details}}"></td>
+            </tr>
+            <tr>
+                <td>Rate</td>
+                <td><input type="text" id="rate" name="txtrate" placeholder="Enter the rate"required value="{{editdata.service_rate}}"></td>
+            </tr>
+            
+            <tr>
+                <td>Photo</td>
+                <td><input type="file" name="filephoto"  required ></td>
+            </tr>
+
+            <tr>
+                <td>Category</td>
+                <td>
+                    <select name="sel_cat" id="sel_cat">
+                        <option value="">...Select...</option>
+                        {% for i in servicedata %}
+                        <option 
+                        {% if i.id == editdata.servicetype_id %}
+                        selected
+                        {% endif %}
+                        value="{{i.id}}">{{i.stype_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+    
+           
+            <tr>
+                <td colspan="2">
+                   <center> <input type="submit" value="Save">
+                    <input type="submit" value="Cancel"></center>
+                </td>
+            </tr>
+        </table>
+        <table border="1" align="center">
+            <tr>
+                <td>Slno</td>
+                <td>Name</td>
+                <td>Details</td>
+                <td>Rate</td>
+                <td>Service Type</td>
+                <td>Photo</td>
+                <td>Action</td>
+                
+            </tr>
+            {%  for i in Data %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{i.service_name}}</td>
+              <td>{{i.service_details}}</td>
+              <td>{{i.service_rate}}</td>
+              <td>{{i.servicetype.stype_name}}</td>
+              <td><img src="{{i.service_photo.url}}" width="50" height="50"></td>
+              <td><a href="{% url 'ServiceCenter:delservice' i.id %}">Delete</a>/<a href="{% url 'ServiceCenter:serviceupdate' i.id %}">Update</a> </td>
+            </tr>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</body>
+</html>
+{% endblock content %}

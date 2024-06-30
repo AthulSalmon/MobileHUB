@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Team Registration</title>
+    
+</head>
+<body>
+    <br><br>
+    <center><h2>Team Registration</h2></center>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <table border="3" align="center">
+            
+            <tr>
+                <td><label for="name">Name</label></td>
+                <td><input type="text" id="name" name="txtname" placeholder="Enter the Name"value="{{editdata.team_name}}"required></td>
+            </tr>
+            
+            <tr>
+                <td><label for="Description">Description</label></td>
+                <td><input type="text" id="Description" name="txtdesc"placeholder="Enter the Description " value="{{editdata.team_desc}}"required></td>
+            </tr>
+            <tr><td>Photo</td>
+                <td><input type="file" name="fileImage"  value="{{editdata.team_photo}}" required ></td>
+            </tr>
+            <tr>
+    
+            <tr>
+                
+                <td colspan="2" align="center">
+                    <input type="submit" name="btnsubmit" value="Save">
+                    <input type="reset" name="btncancel" value="Cancel">
+                </td>
+            </tr>
+        </table>
+        <table border="1" align="center">
+            <tr>
+                <td>Slno</td>
+                <td>Name</td>
+                <td>Description</td>
+                <td>Image</td>
+                <td>Action</td>
+            </tr>
+            {%  for i in data %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{i.team_name}}</td>
+              <td>{{i.team_desc}}</td>
+              <td><img src="{{i.team_photo.url}}" width="50" height="50"></td>
+              <td><a href="{% url 'Test:delteam' i.id %}">Delete</a> | <a href="{% url 'Test:teamupdate' i.id %}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>

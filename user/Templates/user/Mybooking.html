@@ -1,0 +1,102 @@
+{% extends 'user/head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Booking</title>
+    <style>
+        /* CSS for the service booking page */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+        
+        .header-row td {
+            font-weight: bold;
+        }
+
+        /* Define styles for different booking statuses */
+        .pending {
+            color: #FF9800; /* Orange */
+        }
+        
+        .accepted {
+            color: #4CAF50; /* Green */
+        }
+        
+        .rejected {
+            color: #F44336; /* Red */
+        }
+    </style>
+</head>
+<body>
+    <table border="1" align="center">
+        <tr>
+            <td>Slno</td>
+            <td>Service</td>
+            <td>Detail</td>
+            <td>Booked date</td>
+            <td>Date for booking</td>
+            <td>Time for Booking</td> 
+            <td>Complaint</td> 
+            <td>Phone Number</td> 
+            <td>Pickup status</td> 
+            <td>Status</td>
+            <td>Action</td>    
+        </tr>
+        {% for booking in Data %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ booking.service.service_name }}</td>
+            <td>{{ booking.booking_detail }}</td>
+            <td>{{ booking.booking_date }}</td>
+            <td>{{ booking.booking_fordate }}</td>
+            <td>{{ booking.booking_fortime }}</td>
+            <td>{{ booking.complaint_detail }}</td>
+            <td>{{ booking.user_number }}</td>
+            <td>{{ booking.pickup }}</td>
+
+            <td class="{% if booking.booking_status == 0 %}pending{% elif booking.booking_status == 1 %}accepted{% else %}rejected{% endif %}">
+                {% if booking.booking_status == 0 %}
+                    Pending
+                {% elif booking.booking_status == 1 %}
+                    Accepted
+                {% else %}
+                    Rejected
+                {% endif %}
+            </td>
+            <td><a href="{% url 'user:servicerating' booking.service.id %}" class="feedback-link">Feedback</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

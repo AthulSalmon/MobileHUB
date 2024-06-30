@@ -1,0 +1,133 @@
+{% extends 'user/head.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'Main/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'Main/css/all.min.css' %}">
+<style>
+    /* Global styles */
+    .product-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-image {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        max-width: 200px; /* Limiting maximum width */
+        max-height: 200px; /* Limiting maximum height */
+    }
+
+    .product-details {
+        text-align: center;
+    }
+
+    .product-details h3 {
+        margin-top: 10px;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .product-details p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .out-of-stock {
+        color: red;
+        font-weight: bold;
+    }
+
+    /* Add to cart button */
+    .place-order-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 10px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+    .place-order-btn:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<div class="container">
+    <div class="search-bar">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="txtname" id="productid" onkeyup="SearchProduct()" placeholder="Search...">
+        </form>
+    </div>
+
+    <div class="row">
+        {% for product,a in Data %}
+        <div class="col-md-3">
+            <div class="product-item">
+                <img src="{{ product.product_photo.url }}" alt="Product Image" class="product-image">
+                <div class="product-details">
+                    <h3>{{ product.product_name }}</h3>
+                    <p>Rate: {{ product.product_rate }}</p>
+                    <p>Brand: {{ product.brand.brand_name }}</p>
+                    <p>Color: {{ product.color.color_name }}</p>
+                    <p>
+                        {% for k in ar %}
+                            {% if k <= a %}
+                                <i class="fas fa-star text-warning"></i>
+                            {% else %}
+                                <i class="fas fa-star star-light mr-1 main_star"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                    {% if product.total <= 0 %}
+                        <p class="out-of-stock">Out of Stock</p>
+                    {% else %}
+                        <a href="{% url 'user:productbook' product.id %}" class="place-order-btn">Add to cart</a>
+                    {% endif %}
+                    <a href="{% url 'user:viewmore' product.id %}" class="place-order-btn">View More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function SearchProduct() {
+        var word = document.getElementById('productid').value;
+        if (word !== "") {
+            var url = "{% url 'user:productsearch' %}";
+            $.ajax({
+                url: url,
+                data: { word: word },
+                success: function (data) {
+                    $("#result").html(data);
+                },
+            });
+        } else {
+            window.location = "{% url 'user:productbooking' %}";
+        }
+    }
+</script> {% if msg %}
+<script>
+    alert("{{msg}}")
+    window.location = "{% url 'user:mycart' %}"
+</script>
+{% endif %}
+
+
+{% endblock content %}
